@@ -108,19 +108,19 @@ var Circle = /** @class */ (function () {
         ball.pivot.y = radius / 2;
         ball.x = x;
         ball.y = y;
-        ball.velocityx = 5;
-        ball.velocityy = 5;
+        ball.velocityx = Math.random() < 0.5 ? -10 : 10;
+        ball.velocityy = Math.random() < 0.5 ? -10 : 10;
         app.stage.addChild(ball);
         this.ball = ball;
     }
     return Circle;
 }());
-var Monster = /** @class */ (function (_super) {
-    __extends(Monster, _super);
-    function Monster() {
+var CIRCLES = /** @class */ (function (_super) {
+    __extends(CIRCLES, _super);
+    function CIRCLES() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
-    Monster.prototype.update = function () {
+    CIRCLES.prototype.update = function () {
         if (this.ball.y + radius >= appHeight) {
             this.ball.velocityy = -this.ball.velocityy;
             this.ball.y = appHeight - radius;
@@ -143,15 +143,19 @@ var Monster = /** @class */ (function (_super) {
         this.ball.x += this.ball.velocityx;
         this.ball.y += this.ball.velocityy;
     };
-    return Monster;
+    return CIRCLES;
 }(Circle));
-var monsters = [];
+var Circlearray = [];
 for (var i = 0; i < 25; i++) {
-    monsters.push(new Monster(radius, 2, x, y));
+    Circlearray.push(new CIRCLES(radius, 2, x, y));
 }
 var delta = 1;
 app.ticker.add(function (delta) {
-    monsters.forEach(function (c) {
+    Circlearray.forEach(function (c) {
         c.update();
     });
 });
+yell = Math.random() < 0.5 ? -10 : 10;
+xell = Math.random() < 0.5 ? -10 : 10;
+console.log(yell);
+console.log(xell);

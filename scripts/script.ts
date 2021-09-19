@@ -98,14 +98,14 @@ class Circle {
       ball.pivot.y =  radius/2;
       ball.x =  x;
       ball.y =  y;
-      ball.velocityx = 5;
-      ball.velocityy = 5;
+      ball.velocityx = Math.random() < 0.5 ? -10 : 10 ;
+      ball.velocityy = Math.random() < 0.5 ? -10 : 10 ;
       app.stage.addChild(ball);
       this.ball= ball;
   }
 }
 
-class Monster extends Circle {
+class CIRCLES extends Circle {
   update() {
     if (this.ball.y + radius >= appHeight ) {
       this.ball.velocityy = -this.ball.velocityy
@@ -132,18 +132,24 @@ class Monster extends Circle {
   }
 }
 
-let monsters=[];
+let Circlearray=[];
 
 for (let i = 0; i < 25; i++) {
-  monsters.push(new Monster(radius,2,x ,y ));
+  Circlearray.push(new CIRCLES (radius,2,x ,y ));
 }
 
 let delta = 1;
 
 
 app.ticker.add((delta) => {
-  monsters.forEach(c => {
+  Circlearray.forEach(c => {
     c.update();
 }});
 
 
+yell = Math.random() < 0.5 ? -10 : 10;
+xell = Math.random() < 0.5 ? -10 :  10;
+
+console.log(yell)
+
+console.log(xell)
