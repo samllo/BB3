@@ -93,23 +93,24 @@ app.ticker.add((delta) => {
 var v;
 var x;
 var y;
+var gravity = 0;
+var ballSpeed = 10;
 var Circle = /** @class */ (function () {
-    function Circle(radius, v, x, y) {
+    function Circle(radius, x, y, colour) {
         if (x === void 0) { x = Math.random() * appWidth; }
         if (y === void 0) { y = Math.random() * appHeight; }
-        this.v = v;
         this.radius = radius;
         var ball = new PIXI.Graphics();
         ball.lineStyle(0);
-        ball.beginFill(0xDE3249, 1);
+        ball.beginFill(colour, 1);
         ball.drawCircle(0, 0, radius);
         ball.endFill();
         ball.pivot.x = radius / 2;
         ball.pivot.y = radius / 2;
         ball.x = x;
         ball.y = y;
-        ball.velocityx = Math.random() < 0.5 ? -10 : 10;
-        ball.velocityy = Math.random() < 0.5 ? -10 : 10;
+        ball.velocityx = Math.random() < 0.5 ? -ballSpeed : ballSpeed;
+        ball.velocityy = Math.random() < 0.5 ? -ballSpeed : ballSpeed;
         app.stage.addChild(ball);
         this.ball = ball;
     }
@@ -140,6 +141,7 @@ var CIRCLES = /** @class */ (function (_super) {
             this.ball.velocityx = -this.ball.velocityx;
             this.ball.x = appWidth - radius;
         }
+        this.ball.velocityy += gravity;
         this.ball.x += this.ball.velocityx;
         this.ball.y += this.ball.velocityy;
     };
@@ -147,7 +149,7 @@ var CIRCLES = /** @class */ (function (_super) {
 }(Circle));
 var Circlearray = [];
 for (var i = 0; i < 25; i++) {
-    Circlearray.push(new CIRCLES(radius, 2, x, y));
+    Circlearray.push(new CIRCLES(radius, x, y, 0xDE3249));
 }
 var delta = 1;
 app.ticker.add(function (delta) {
@@ -155,7 +157,55 @@ app.ticker.add(function (delta) {
         c.update();
     });
 });
-yell = Math.random() < 0.5 ? -10 : 10;
-xell = Math.random() < 0.5 ? -10 : 10;
-console.log(yell);
-console.log(xell);
+/* Buttons*/
+var textureButton = PIXI.Texture.from('images/bluebut.png');
+var textureButtonDown = PIXI.Texture.from('images/redbut.png');
+var buttons = [];
+var buttonPositions = [
+    175, 75,
+    250, 75,
+    325, 75,
+];
+for (var i = 0; i < 3; i++) {
+    var button = new PIXI.Sprite(textureButton);
+    button.anchor.set(0.5);
+    button.x = buttonPositions[i * 2];
+    button.y = buttonPositions[i * 2 + 1];
+    // make the button interactive...
+    button.interactive = true;
+    button.buttonMode = true;
+    button;
+    // add it to the stage
+    app.stage.addChild(button);
+    // add button to array
+    buttons.push(button);
+}
+buttons[0].scale.set(0.1);
+buttons[1].scale.set(0.1);
+buttons[2].scale.set(0.1);
+buttons[0].on('mousedown', button0D);
+buttons[0].on('mouseup', button0U);
+function button0D() {
+    gravity = 1.2;
+    this.texture = textureButtonDown;
+    this.alpha = 1;
+    this.isdown = true;
+}
+function button0U() {
+    gravity = 0;
+    this.texture = textureButton;
+    this.isdown = false;
+}
+buttons[1].on('mousedown', button1D);
+buttons[1].on('mouseup', button1U);
+var randomColor = Math.floor(Math.random() * 16777215).toString(16);
+function button1D() {
+    Circlearray.push(new CIRCLES(radius, x, y, 0x0000FF));
+    this.texture = textureButtonDown;
+    this.alpha = 1;
+    this.isdown = true;
+}
+function button1U() {
+    this.texture = textureButton;
+    this.isdown = false;
+}
