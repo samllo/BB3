@@ -82,10 +82,11 @@ app.ticker.add((delta) => {
   ball.y += ball.velocityy;
 });
 */
+let ticker = PIXI.Ticker.shared;
 let v;
 let x;
 let y;
-let gravity = 0;
+let gravity = 0.1;
 let ballSpeed = 10;
 class Circle {
   constructor(radius, x = Math.random() * appWidth , y = Math.random() * appHeight, colour ) {
@@ -104,6 +105,7 @@ class Circle {
       app.stage.addChild(ball);
       this.ball= ball;
   }
+
 }
 
 class CIRCLES extends Circle {
@@ -132,6 +134,7 @@ class CIRCLES extends Circle {
     this.ball.x += this.ball.velocityx;
     this.ball.y += this.ball.velocityy;
   }
+
 }
 
 let Circlearray=[];
@@ -142,7 +145,7 @@ for (let i = 0; i < 25; i++) {
 
 
 let delta = 1;
-app.ticker.add((delta) => {
+ticker.add((delta) => {
   Circlearray.forEach(c => {
     c.update();
 }});
@@ -195,15 +198,13 @@ function button0D(){
 }
 
 function button0U(){
-  gravity = 0;
+  gravity = 0.1;
   this.texture = textureButton;
   this.isdown = false;
 }
 
 buttons[1].on('mousedown', button1D;)
 buttons[1].on('mouseup', button1U;)
-
-const randomColor = Math.floor(Math.random()*16777215).toString(16);
 
 function button1D(){
   Circlearray.push(new CIRCLES (radius,x ,y,0x0000FF))
@@ -216,3 +217,21 @@ function button1U(){
   this.texture = textureButton;
   this.isdown = false;
 }
+
+
+buttons[2].on('mousedown', button2D;)
+buttons[2].on('mouseup', button2U;)
+
+function button2D(){
+  this.texture = textureButtonDown;
+  this.alpha = 1;
+  this.isdown = true;
+  ticker.stop();
+}
+
+function button2U(){
+  this.texture = textureButton;
+  this.isdown = false;
+  ticker.start();
+}
+

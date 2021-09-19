@@ -90,10 +90,11 @@ app.ticker.add((delta) => {
   ball.y += ball.velocityy;
 });
 */
+var ticker = PIXI.Ticker.shared;
 var v;
 var x;
 var y;
-var gravity = 0;
+var gravity = 0.1;
 var ballSpeed = 10;
 var Circle = /** @class */ (function () {
     function Circle(radius, x, y, colour) {
@@ -152,7 +153,7 @@ for (var i = 0; i < 25; i++) {
     Circlearray.push(new CIRCLES(radius, x, y, 0xDE3249));
 }
 var delta = 1;
-app.ticker.add(function (delta) {
+ticker.add(function (delta) {
     Circlearray.forEach(function (c) {
         c.update();
     });
@@ -192,13 +193,12 @@ function button0D() {
     this.isdown = true;
 }
 function button0U() {
-    gravity = 0;
+    gravity = 0.1;
     this.texture = textureButton;
     this.isdown = false;
 }
 buttons[1].on('mousedown', button1D);
 buttons[1].on('mouseup', button1U);
-var randomColor = Math.floor(Math.random() * 16777215).toString(16);
 function button1D() {
     Circlearray.push(new CIRCLES(radius, x, y, 0x0000FF));
     this.texture = textureButtonDown;
@@ -208,4 +208,17 @@ function button1D() {
 function button1U() {
     this.texture = textureButton;
     this.isdown = false;
+}
+buttons[2].on('mousedown', button2D);
+buttons[2].on('mouseup', button2U);
+function button2D() {
+    this.texture = textureButtonDown;
+    this.alpha = 1;
+    this.isdown = true;
+    ticker.stop();
+}
+function button2U() {
+    this.texture = textureButton;
+    this.isdown = false;
+    ticker.start();
 }
