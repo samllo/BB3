@@ -1,7 +1,7 @@
 const appHeight = 600;
 const appWidth = 700;
 const radius = 30;
-const velocity = 2;
+let velocity = 2;
 
 const app = new PIXI.Application({
   width: appWidth,
@@ -87,14 +87,14 @@ let v;
 let x;
 let y;
 let gravity = 0.1;
-let ballSpeed = 10;
+let ballSpeed = 8;
 class Circle {
   constructor(radius, x = Math.random() * appWidth , y = Math.random() * appHeight, colour ) {
-      this.radius = radius;
       const ball = new PIXI.Graphics();
       ball.lineStyle(0); 
       ball.beginFill(colour, 1);
       ball.drawCircle( 0, 0, radius);
+      this.radius = radius;
       ball.endFill();
       ball.pivot.x = radius/2;
       ball.pivot.y =  radius/2;
@@ -164,7 +164,7 @@ const buttonPositions = [
     325, 75,
 ]
 
-for (let i = 0; i < 3; i++) {
+for (let i = 0; i < 4; i++) {
   const button = new PIXI.Sprite(textureButton);
 
   button.anchor.set(0.5);
@@ -219,8 +219,8 @@ function button1U(){
 }
 
 
-buttons[2].on('mousedown', button2D;)
-buttons[2].on('mouseup', button2U;)
+buttons[2].on('mousedown', button2D)
+buttons[2].on('mouseup', button2U)
 
 function button2D(){
   this.texture = textureButtonDown;

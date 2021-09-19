@@ -95,16 +95,16 @@ var v;
 var x;
 var y;
 var gravity = 0.1;
-var ballSpeed = 10;
+var ballSpeed = 8;
 var Circle = /** @class */ (function () {
     function Circle(radius, x, y, colour) {
         if (x === void 0) { x = Math.random() * appWidth; }
         if (y === void 0) { y = Math.random() * appHeight; }
-        this.radius = radius;
         var ball = new PIXI.Graphics();
         ball.lineStyle(0);
         ball.beginFill(colour, 1);
         ball.drawCircle(0, 0, radius);
+        this.radius = radius;
         ball.endFill();
         ball.pivot.x = radius / 2;
         ball.pivot.y = radius / 2;
@@ -167,7 +167,7 @@ var buttonPositions = [
     250, 75,
     325, 75,
 ];
-for (var i = 0; i < 3; i++) {
+for (var i = 0; i < 4; i++) {
     var button = new PIXI.Sprite(textureButton);
     button.anchor.set(0.5);
     button.x = buttonPositions[i * 2];
