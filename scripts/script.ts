@@ -14,7 +14,7 @@ const app = new PIXI.Application({
   backgroundColor: 0xeeeeee
 });
 
-document.body.appendChild(app.view);
+document.getElementById("screen").appendChild(app.view);
 
 const stage = app.stage;
 

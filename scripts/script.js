@@ -27,7 +27,7 @@ var app = new PIXI.Application({
     resolution: 1,
     backgroundColor: 0xeeeeee
 });
-document.body.appendChild(app.view);
+document.getElementById("screen").appendChild(app.view);
 var stage = app.stage;
 var ticker = PIXI.Ticker.shared;
 var v;
