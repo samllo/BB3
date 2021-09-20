@@ -1,3 +1,4 @@
+// variables and gsap setup
 const appHeight = 600;
 const appWidth = 700;
 const radius = 30;
@@ -5,6 +6,7 @@ let velocity = 2;
 gsap.registerPlugin();
 gsap.registerEffect({});
 
+// canvas setup
 const app = new PIXI.Application({
   width: appWidth,
   height: appHeight,
@@ -15,15 +17,17 @@ const app = new PIXI.Application({
 });
 
 document.getElementById("screen").appendChild(app.view);
-
 const stage = app.stage;
 
+// Global ticker and empty variable for classes
 let ticker = PIXI.Ticker.shared;
 let v;
 let x;
 let y;
 let gravity = 0.1;
 let ballSpeed = 10;
+
+//Ball creation class, random number generation dictates xy direction and position
 class Circle {
   constructor(radius, x = Math.random() * appWidth , y = Math.random() * appHeight, colour ) {
       const ball = new PIXI.Graphics();
@@ -44,6 +48,9 @@ class Circle {
 
 }
 
+//Extends ball creation class with a method thatn can be updated using update loop set of by ticker
+
+// x/y direction is reveresed when balls anchor reaches limits of appheight and width
 class CIRCLES extends Circle {
   update() {
     if (this.ball.y + radius >= appHeight ) {
@@ -73,12 +80,13 @@ class CIRCLES extends Circle {
 
 }
 
+//For loop places 25 balls into circle array
 let Circlearray=[];
-
 for (let i = 0; i < 25; i++) {
   Circlearray.push(new CIRCLES (radius,x ,y, 0xDE3249));
 }
 
+// ticker triggers update() method of CIRCLES
 let delta = 1;
 ticker.add((delta) => {
   Circlearray.forEach(c => {
@@ -86,13 +94,13 @@ ticker.add((delta) => {
   })
 }
 
-/* Buttons*/
-
+/* Buttons images for pressed unpressed*/
 const textureButton = PIXI.Texture.from('images/bluebut.png');
 const textureButtonDown = PIXI.Texture.from('images/redbut.png');
 const buttons = [];
 
 
+// button posiiton in array and for loop creating 3
 const buttonPositions = [
     100, 500,
     200, 500,
@@ -116,6 +124,8 @@ buttons[0].scale.set(0.1);
 buttons[1].scale.set(0.1);
 buttons[2].scale.set(0.1);
 
+
+// Struggled to minimise all these function calls
 buttons[0].on('mousedown', button0D)
 buttons[0].on('mouseup', button0U)
 buttons[0].on('mouseover', movebutton1)
@@ -171,6 +181,7 @@ function button2U(){
 
 //effects
 
+// basic scale change on hover, couldn't get fades to work
 function movebutton1() {
   TweenMax.to(buttons[0].scale.set(0.12));
 }

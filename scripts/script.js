@@ -13,12 +13,14 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+// variables and gsap setup
 var appHeight = 600;
 var appWidth = 700;
 var radius = 30;
 var velocity = 2;
 gsap.registerPlugin();
 gsap.registerEffect({});
+// canvas setup
 var app = new PIXI.Application({
     width: appWidth,
     height: appHeight,
@@ -29,12 +31,14 @@ var app = new PIXI.Application({
 });
 document.getElementById("screen").appendChild(app.view);
 var stage = app.stage;
+// Global ticker and empty variable for classes
 var ticker = PIXI.Ticker.shared;
 var v;
 var x;
 var y;
 var gravity = 0.1;
 var ballSpeed = 10;
+//Ball creation class, random number generation dictates xy direction and position
 var Circle = /** @class */ (function () {
     function Circle(radius, x, y, colour) {
         if (x === void 0) { x = Math.random() * appWidth; }
@@ -56,6 +60,8 @@ var Circle = /** @class */ (function () {
     }
     return Circle;
 }());
+//Extends ball creation class with a method thatn can be updated using update loop set of by ticker
+// x/y direction is reveresed when balls anchor reaches limits of appheight and width
 var CIRCLES = /** @class */ (function (_super) {
     __extends(CIRCLES, _super);
     function CIRCLES() {
@@ -87,20 +93,23 @@ var CIRCLES = /** @class */ (function (_super) {
     };
     return CIRCLES;
 }(Circle));
+//For loop places 25 balls into circle array
 var Circlearray = [];
 for (var i = 0; i < 25; i++) {
     Circlearray.push(new CIRCLES(radius, x, y, 0xDE3249));
 }
+// ticker triggers update() method of CIRCLES
 var delta = 1;
 ticker.add(function (delta) {
     Circlearray.forEach(function (c) {
         c.update();
     });
 });
-/* Buttons*/
+/* Buttons images for pressed unpressed*/
 var textureButton = PIXI.Texture.from('images/bluebut.png');
 var textureButtonDown = PIXI.Texture.from('images/redbut.png');
 var buttons = [];
+// button posiiton in array and for loop creating 3
 var buttonPositions = [
     100, 500,
     200, 500,
@@ -121,6 +130,7 @@ for (var i = 0; i < 3; i++) {
 buttons[0].scale.set(0.1);
 buttons[1].scale.set(0.1);
 buttons[2].scale.set(0.1);
+// Struggled to minimise all these function calls
 buttons[0].on('mousedown', button0D);
 buttons[0].on('mouseup', button0U);
 buttons[0].on('mouseover', movebutton1);
@@ -166,6 +176,7 @@ function button2U() {
     ticker.start();
 }
 //effects
+// basic scale change on hover, couldn't get fades to work
 function movebutton1() {
     TweenMax.to(buttons[0].scale.set(0.12));
 }
