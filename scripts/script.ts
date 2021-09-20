@@ -68,6 +68,7 @@ class CIRCLES extends Circle {
       this.ball.velocityx = -this.ball.velocityx
       this.ball.x = radius
     }
+    
     // right 
     if (this.ball.x + radius >= appWidth) {
       this.ball.velocityx= -this.ball.velocityx
